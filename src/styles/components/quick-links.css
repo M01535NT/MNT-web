@@ -1,4 +1,4 @@
-/* Quick Links — Material icon grid with Swiss restraint */
+/* Quick Links — soft grid with warm feel */
 
 .quick-links {
   display: grid;
@@ -8,7 +8,6 @@
 
 @media (min-width: 640px) {
   .quick-links {
-    grid-template-columns: repeat(4, 1fr);
     gap: var(--space-2);
   }
 }
@@ -22,21 +21,19 @@
   padding: var(--space-2) var(--space-1);
   background: var(--color-surface);
   border-radius: var(--radius-md);
-  border: var(--border-thin) solid var(--color-border-subtle);
-  box-shadow: var(--shadow-1);
+  border: var(--border-thin) solid var(--color-border);
   text-align: center;
   min-height: 80px;
-  transition: all var(--transition-fast);
+  transition: all var(--transition-base);
 }
 
 .quick-links__item:hover {
-  box-shadow: var(--shadow-2);
   border-color: var(--color-accent);
-  transform: translateY(-2px);
+  background: var(--color-surface-2);
+  transform: translateY(-1px);
 }
 
 .quick-links__item:active {
-  box-shadow: var(--shadow-1);
   transform: translateY(0);
 }
 
@@ -52,6 +49,7 @@
   width: 22px;
   height: 22px;
   stroke: var(--color-accent);
+  opacity: 0.8;
 }
 
 .quick-links__label {
@@ -62,9 +60,6 @@
 }
 
 @media (min-width: 640px) {
-  .quick-links {
-    grid-template-columns: repeat(4, 1fr);
-  }
   .quick-links__item {
     min-height: 96px;
     padding: var(--space-3) var(--space-2);

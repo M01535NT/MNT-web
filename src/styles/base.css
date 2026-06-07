@@ -1,6 +1,6 @@
-/* Base styles — Swiss Style + Material Design */
+/* Base styles — Soft Intellectual */
 
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/dm-sans';
 @import './reset.css';
 @import './tokens.css';
 
@@ -13,7 +13,7 @@ body {
   color: var(--color-text);
   background-color: var(--color-bg);
   transition: background-color var(--transition-base), color var(--transition-base);
-  font-feature-settings: 'cv05', 'cv10', 'ss03';  /* Inter stylistic sets */
+  letter-spacing: -0.01em;
 }
 
 /* ─── Container ─── */
@@ -34,7 +34,7 @@ body {
   }
 }
 
-/* ─── Sections — Swiss asymmetric, no heavy borders ─── */
+/* ─── Sections — breathing room ─── */
 .section {
   padding-block: var(--space-5);
 }
@@ -46,16 +46,16 @@ body {
 .section__label {
   display: inline-block;
   font-size: var(--text-xs);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: var(--color-accent);
   margin-bottom: var(--space-1);
 }
 
 .section__title {
   font-size: var(--text-2xl);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   line-height: var(--leading-tight);
   letter-spacing: -0.02em;
 }
@@ -69,38 +69,36 @@ body {
   }
 }
 
-/* ─── Buttons — Material-style with rounded corners ─── */
+/* ─── Buttons — soft, warm ─── */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  padding: 0.625rem 1.25rem;
+  padding: 0.75rem 1.5rem;
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
   line-height: 1;
   border-radius: var(--radius-full);
-  transition: all var(--transition-fast);
+  transition: all var(--transition-base);
   cursor: pointer;
   min-height: 44px;
   min-width: 44px;
   justify-content: center;
+  border: none;
 }
 
 .btn--primary {
   background: var(--color-accent);
   color: var(--color-accent-contrast);
-  box-shadow: var(--shadow-1);
 }
 
 .btn--primary:hover {
   background: var(--color-accent-light);
-  box-shadow: var(--shadow-2);
   transform: translateY(-1px);
 }
 
 .btn--primary:active {
   background: var(--color-accent-dark);
-  box-shadow: var(--shadow-1);
   transform: translateY(0);
 }
 
@@ -120,36 +118,34 @@ body {
 }
 
 .btn--ghost:hover {
-  background: var(--color-surface-2);
+  background: var(--color-surface);
   color: var(--color-text);
 }
 
-/* ─── Cards (Material surface) ─── */
+/* ─── Cards (soft surface) ─── */
 .card {
   background: var(--color-surface);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-1);
-  border: var(--border-thin) solid var(--color-border-subtle);
-  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+  border: var(--border-thin) solid var(--color-border);
+  transition: all var(--transition-base);
 }
 
 .card:hover {
-  box-shadow: var(--shadow-3);
-  transform: translateY(-2px);
+  border-color: var(--color-accent);
 }
 
 /* ─── Theme transition helper ─── */
 .theme-transitioning,
 .theme-transitioning * {
-  transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base) !important;
+  transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base) !important;
 }
 
-/* ─── Stats band ─── */
+/* ─── Stats band — warm, understated ─── */
 .stats-band {
   padding-block: var(--space-4);
   background: var(--color-surface);
-  border-top: var(--border-thin) solid var(--color-border-subtle);
-  border-bottom: var(--border-thin) solid var(--color-border-subtle);
+  border-top: var(--border-thin) solid var(--color-border);
+  border-bottom: var(--border-thin) solid var(--color-border);
 }
 
 .stats-band__grid {
@@ -166,7 +162,7 @@ body {
 .stats-band__value {
   display: block;
   font-size: var(--text-3xl);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-medium);
   color: var(--color-accent);
   line-height: 1;
   letter-spacing: -0.03em;
@@ -178,6 +174,7 @@ body {
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  font-weight: var(--weight-light);
 }
 
 @media (min-width: 768px) {
@@ -189,27 +186,5 @@ body {
   }
   .stats-band__value {
     font-size: var(--text-4xl);
-  }
-}
-
-/* ─── Entrance animations (Material motion) ─── */
-.animate-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  transition-delay: calc(var(--i, 0) * 80ms);
-}
-
-.animate-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-in {
-    opacity: 1;
-    transform: none;
-    transition: none;
   }
 }

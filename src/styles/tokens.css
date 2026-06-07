@@ -1,107 +1,81 @@
 /* Design tokens — MNT-web
-   Swiss Style + Material Design
-   Grid asimétrico, tipografía limpia, elevación con sombras, bordes redondeados.
+   Soft Intellectual (Intelectualismo Cálido)
+   DM Sans, bronce mate, negro cálido, blancos piedra.
 */
 
 :root {
-  /* ─── Color — Swiss restrained palette + Material accent ─── */
-  --color-bg: #fafafa;
-  --color-surface: #ffffff;
-  --color-surface-2: #f0f0f0;
-  --color-surface-3: #e8e8e8;
-  --color-text: #1a1a1a;
-  --color-text-muted: #5c5c5c;
-  --color-text-subtle: #8a8a8a;
-  --color-border: #d4d4d4;
-  --color-border-subtle: #e8e8e8;
-  --color-accent: #1565c0;          /* Material Blue 800 */
-  --color-accent-light: #1e88e5;    /* Blue 600 */
-  --color-accent-dark: #0d47a1;     /* Blue 900 */
-  --color-accent-contrast: #ffffff;
-  --color-accent-surface: #e3f2fd;  /* Blue 50 */
+  /* ─── Color — Warm black + stone + bronze ─── */
+  --color-bg: #121210;
+  --color-surface: #1a1a18;
+  --color-surface-2: #222220;
+  --color-surface-3: #2a2a27;
+  --color-text: #E8E6E1;
+  --color-text-muted: #a09d96;
+  --color-text-subtle: #6b6964;
+  --color-border: #ffffff10;
+  --color-border-subtle: #ffffff08;
+  --color-accent: #C49A6C;
+  --color-accent-light: #d4b08a;
+  --color-accent-dark: #a0784a;
+  --color-accent-contrast: #121210;
+  --color-accent-surface: #1f1b15;
 
-  /* ─── Typography — Inter ─── */
-  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* ─── Typography — DM Sans ─── */
+  --font-sans: 'DM Sans Variable', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
 
-  /* Material type scale (px → rem) */
-  --text-xs: 0.75rem;      /* 12 — caption */
-  --text-sm: 0.875rem;     /* 14 — body2 */
-  --text-base: 1rem;       /* 16 — body1 */
-  --text-lg: 1.125rem;     /* 18 — subtitle */
-  --text-xl: 1.25rem;      /* 20 — title */
-  --text-2xl: 1.5rem;      /* 24 — headline */
-  --text-3xl: 2.125rem;    /* 34 — display */
-  --text-4xl: 3rem;        /* 48 */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.75rem;
 
-  --leading-tight: 1.15;
-  --leading-snug: 1.35;
-  --leading-normal: 1.6;
+  --leading-tight: 1.2;
+  --leading-snug: 1.4;
+  --leading-normal: 1.65;
 
-  /* Font weights — Material system */
   --weight-light: 300;
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
 
-  /* ─── 8dp spacing scale ─── */
+  /* ─── Spacing — generous breathing room ─── */
   --space-0: 0;
-  --space-1: 0.5rem;       /*  8 */
-  --space-2: 1rem;         /* 16 */
-  --space-3: 1.5rem;       /* 24 */
-  --space-4: 2rem;         /* 32 */
-  --space-5: 3rem;         /* 48 */
-  --space-6: 4rem;         /* 64 */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 5rem;
 
-  /* ─── Radii — Material rounded ─── */
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  /* ─── Radii — soft, warm ─── */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
   --radius-xl: 24px;
   --radius-full: 9999px;
 
-  /* ─── Material elevation shadows ─── */
-  --shadow-1: 0 1px 2px 0 rgba(0,0,0,0.05), 0 1px 3px 0 rgba(0,0,0,0.06);
-  --shadow-2: 0 2px 4px 0 rgba(0,0,0,0.06), 0 3px 8px 0 rgba(0,0,0,0.06);
-  --shadow-3: 0 4px 8px 0 rgba(0,0,0,0.08), 0 4px 12px 0 rgba(0,0,0,0.06);
-  --shadow-4: 0 6px 12px 0 rgba(0,0,0,0.08), 0 8px 20px 0 rgba(0,0,0,0.06);
-  --shadow-5: 0 8px 16px 0 rgba(0,0,0,0.08), 0 12px 28px 0 rgba(0,0,0,0.06);
+  /* ─── Shadows — barely there, soft ─── */
+  --shadow-1: 0 1px 3px rgba(0,0,0,0.2);
+  --shadow-2: 0 2px 8px rgba(0,0,0,0.25);
+  --shadow-3: 0 4px 16px rgba(0,0,0,0.3);
 
   /* ─── Borders ─── */
   --border-thin: 1px;
   --border-thick: 2px;
 
   /* ─── Container ─── */
-  --container-max: 64rem;       /* 1024 */
-  --container-narrow: 44rem;    /* 704 */
+  --container-max: 64rem;
+  --container-narrow: 44rem;
 
-  /* ─── Transitions — Material motion ─── */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* ─── Transitions — fluid, calm ─── */
+  --transition-fast: 200ms ease-out;
+  --transition-base: 300ms ease-out;
+  --transition-slow: 400ms ease-out;
 }
 
-[data-theme='dark'] {
-  --color-bg: #121212;
-  --color-surface: #1e1e1e;
-  --color-surface-2: #252525;
-  --color-surface-3: #2e2e2e;
-  --color-text: #e8e8e8;
-  --color-text-muted: #a0a0a0;
-  --color-text-subtle: #707070;
-  --color-border: #3a3a3a;
-  --color-border-subtle: #2a2a2a;
-  --color-accent: #42a5f5;           /* Blue 400 */
-  --color-accent-light: #64b5f6;     /* Blue 300 */
-  --color-accent-dark: #1e88e5;      /* Blue 600 */
-  --color-accent-contrast: #121212;
-  --color-accent-surface: #0d2137;
-
-  /* Elevation adapts to dark (darker shadows) */
-  --shadow-1: 0 1px 2px 0 rgba(0,0,0,0.3), 0 1px 3px 0 rgba(0,0,0,0.2);
-  --shadow-2: 0 2px 4px 0 rgba(0,0,0,0.35), 0 3px 8px 0 rgba(0,0,0,0.25);
-  --shadow-3: 0 4px 8px 0 rgba(0,0,0,0.4), 0 4px 12px 0 rgba(0,0,0,0.3);
-  --shadow-4: 0 6px 12px 0 rgba(0,0,0,0.4), 0 8px 20px 0 rgba(0,0,0,0.3);
-  --shadow-5: 0 8px 16px 0 rgba(0,0,0,0.4), 0 12px 28px 0 rgba(0,0,0,0.3);
-}
+/* Soft Intellectual es oscuro por naturaleza — sin light mode */

@@ -5,8 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <meta name="description" content="Moisés Núñez — Consultor inmobiliario en Tijuana, BC. Compra, venta, renta y asesoría legal de propiedades." />
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#1565c0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121210" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="MNT" />
@@ -37,13 +36,7 @@
     <script>
       // Evitar flash de tema incorrecto
       (function () {
-        try {
-          const stored = localStorage.getItem('mnt-theme');
-          const theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-          document.documentElement.dataset.theme = theme;
-        } catch (e) {
-          document.documentElement.dataset.theme = 'light';
-        }
+        document.documentElement.dataset.theme = 'dark';
       })();
     </script>
   </head>
