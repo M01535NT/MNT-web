@@ -198,25 +198,6 @@ const renderContact = () => `
             </a>
           </div>
         </div>
-        <form class="form" data-form aria-label="Formulario de contacto">
-          <h3 class="form__title">Envíame un mensaje</h3>
-          <div class="form__row">
-            <label class="form__label" for="form-name">Nombre</label>
-            <input class="form__input" type="text" id="form-name" name="name" required autocomplete="name" placeholder="Tu nombre" />
-          </div>
-          <div class="form__row">
-            <label class="form__label" for="form-email">Email</label>
-            <input class="form__input" type="email" id="form-email" name="email" required autocomplete="email" placeholder="tu@email.com" />
-          </div>
-          <div class="form__row">
-            <label class="form__label" for="form-message">Mensaje</label>
-            <textarea class="form__textarea" id="form-message" name="message" rows="4" required placeholder="¿En qué puedo ayudarte?"></textarea>
-          </div>
-          <button type="submit" class="btn btn--primary form__submit">
-            ${ic('email')} Enviar mensaje
-          </button>
-          <p class="form__status" data-form-status aria-live="polite"></p>
-        </form>
       </div>
     </div>
   </section>
@@ -307,17 +288,6 @@ const handleVCard = (e: Event) => {
   });
 };
 
-const handleFormSubmit = (e: SubmitEvent) => {
-  e.preventDefault();
-  const form = e.target as HTMLFormElement;
-  const status = form.querySelector('[data-form-status]') as HTMLElement;
-  status.dataset.state = 'success';
-  status.textContent = 'Gracias. Te respondo en menos de 24 horas.';
-  form.reset();
-};
-
-// ─── Scroll: header shadow ──────────────────────
-
 const handleScroll = () => {
   const header = document.getElementById('header');
   if (!header) return;
@@ -336,7 +306,6 @@ const init = () => {
     handleShare(e);
     handleVCard(e);
   });
-  document.addEventListener('submit', handleFormSubmit);
   document.addEventListener('scroll', handleScroll, { passive: true });
 
   // Smooth scroll a anchors

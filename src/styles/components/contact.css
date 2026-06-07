@@ -1,16 +1,7 @@
 /* Contact — Swiss asymmetric + Material form card */
 
 .contact__inner {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-4);
-}
-
-@media (min-width: 768px) {
-  .contact__inner {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-5);
-  }
+  max-width: 36rem;
 }
 
 .contact__intro h2 {
