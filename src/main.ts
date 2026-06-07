@@ -115,10 +115,10 @@ const renderQuickLinks = () => `
         <span class="section__label">Accesos directos</span>
       </div>
       <div class="quick-links" role="list">
-        ${QUICK_LINKS.map(link => {
+        ${QUICK_LINKS.map((link, i) => {
           const attrs = link.external ? 'target="_blank" rel="noopener noreferrer"' : '';
           return `
-            <a href="${link.href}" class="quick-links__item" role="listitem" aria-label="${link.label}" ${attrs} data-action="${link.action ?? ''}">
+            <a href="${link.href}" class="quick-links__item animate-in" style="--i: ${i}" role="listitem" aria-label="${link.label}" ${attrs} data-action="${link.action ?? ''}">
               <span class="quick-links__icon-wrap">${ic(link.icon)}</span>
               <span class="quick-links__label">${link.label}</span>
             </a>`;
@@ -137,13 +137,20 @@ const renderAbout = () => `
       </div>
       <div class="about">
         <div>${PROFILE.bio.map(p => `<p class="about__text">${p}</p>`).join('')}</div>
-        <div class="about__stats">
-          ${PROFILE.stats.map(s => `
-            <div class="about__stat">
-              <span class="about__stat-value">${s.value}</span>
-              <span class="about__stat-label">${s.label}</span>
-            </div>`).join('')}
-        </div>
+      </div>
+    </div>
+  </section>
+`;
+
+const renderStats = () => `
+  <section class="stats-band" aria-label="Estadísticas">
+    <div class="container">
+      <div class="stats-band__grid">
+        ${PROFILE.stats.map((s, i) => `
+          <div class="stats-band__item animate-in" style="--i: ${i}">
+            <span class="stats-band__value">${s.value}</span>
+            <span class="stats-band__label">${s.label}</span>
+          </div>`).join('')}
       </div>
     </div>
   </section>
@@ -158,7 +165,7 @@ const renderServices = () => `
       </div>
       <div class="services__grid">
         ${SERVICES.map((s, i) => `
-          <article class="service">
+          <article class="service animate-in" style="--i: ${i}">
             <span class="service__number">0${i + 1}</span>
             <span class="service__icon" aria-hidden="true">${ic(s.icon)}</span>
             <h3 class="service__title">${s.title}</h3>
@@ -235,6 +242,7 @@ const renderApp = () => {
     renderHero(),
     renderQuickLinks(),
     renderAbout(),
+    renderStats(),
     renderServices(),
     renderContact(),
     '</main>',
@@ -307,6 +315,18 @@ const init = () => {
     handleVCard(e);
   });
   document.addEventListener('scroll', handleScroll, { passive: true });
+
+  // Entrance animations observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
 
   // Smooth scroll a anchors
   document.addEventListener('click', (e) => {

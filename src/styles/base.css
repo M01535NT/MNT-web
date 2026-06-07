@@ -143,3 +143,73 @@ body {
 .theme-transitioning * {
   transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base) !important;
 }
+
+/* ─── Stats band ─── */
+.stats-band {
+  padding-block: var(--space-4);
+  background: var(--color-surface);
+  border-top: var(--border-thin) solid var(--color-border-subtle);
+  border-bottom: var(--border-thin) solid var(--color-border-subtle);
+}
+
+.stats-band__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.stats-band__item {
+  padding: var(--space-2);
+}
+
+.stats-band__value {
+  display: block;
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-accent);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.25rem;
+}
+
+.stats-band__label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+@media (min-width: 768px) {
+  .stats-band {
+    padding-block: var(--space-5);
+  }
+  .stats-band__grid {
+    gap: var(--space-4);
+  }
+  .stats-band__value {
+    font-size: var(--text-4xl);
+  }
+}
+
+/* ─── Entrance animations (Material motion) ─── */
+.animate-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+.animate-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
