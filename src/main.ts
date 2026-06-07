@@ -1,4 +1,8 @@
-// MNT-web — Swiss Style + Material Design
+// ═══════════════════════════════════════════════════════════
+// MNT-web — Material Design 3 (Material You)
+// Componentes mapeados a especificación MD3 oficial de Google
+// ═══════════════════════════════════════════════════════════
+
 import './styles/base.css';
 import './styles/components/header.css';
 import './styles/components/hero.css';
@@ -61,8 +65,11 @@ const SERVICES = [
 
 const ic = (name: keyof typeof icons) => icons[name];
 
-// ─── Components ──────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+// MD3 COMPONENTS
+// ═══════════════════════════════════════════════════════════
 
+// MD3 Top App Bar — center-aligned (spec: m3.components.top-app-bar)
 const renderHeader = () => `
   <header class="header" id="header">
     <div class="container header__inner">
@@ -78,6 +85,7 @@ const renderHeader = () => `
   </header>
 `;
 
+// MD3-styled profile hero — Display/Headline typography
 const renderHero = () => `
   <section class="hero" id="top">
     <div class="container">
@@ -95,10 +103,10 @@ const renderHero = () => `
             <span class="hero__meta-item">${ic('phone')}<span>${PROFILE.phone}</span></span>
           </div>
           <div class="hero__cta">
-            <a class="btn btn--primary" href="https://wa.me/${PROFILE.whatsappRaw}" target="_blank" rel="noopener noreferrer">
+            <a class="btn btn--filled" href="https://wa.me/${PROFILE.whatsappRaw}" target="_blank" rel="noopener noreferrer">
               ${ic('whatsapp')} WhatsApp
             </a>
-            <a class="btn btn--outline" href="tel:${PROFILE.phone}">
+            <a class="btn btn--outlined" href="tel:${PROFILE.phone}">
               ${ic('phone')} Llamar
             </a>
           </div>
@@ -108,6 +116,7 @@ const renderHero = () => `
   </section>
 `;
 
+// MD3 Assist Chips — quick action grid
 const renderQuickLinks = () => `
   <section class="section" id="accesos" aria-label="Accesos directos">
     <div class="container">
@@ -128,6 +137,7 @@ const renderQuickLinks = () => `
   </section>
 `;
 
+// MD3 body-copy section
 const renderAbout = () => `
   <section class="section" id="sobre-mi" aria-label="Sobre mí">
     <div class="container container--narrow">
@@ -142,6 +152,7 @@ const renderAbout = () => `
   </section>
 `;
 
+// MD3 surface-variant stats band
 const renderStats = () => `
   <section class="stats-band" aria-label="Estadísticas">
     <div class="container">
@@ -156,6 +167,7 @@ const renderStats = () => `
   </section>
 `;
 
+// MD3 Elevated Cards — services
 const renderServices = () => `
   <section class="section" id="servicios" aria-label="Servicios">
     <div class="container">
@@ -176,6 +188,7 @@ const renderServices = () => `
   </section>
 `;
 
+// MD3 Outlined Cards — contact
 const renderContact = () => `
   <section class="section" id="contacto" aria-label="Contacto">
     <div class="container">
@@ -210,6 +223,7 @@ const renderContact = () => `
   </section>
 `;
 
+// Footer — MD3 surface variant
 const renderFooter = () => `
   <footer class="footer" id="ubicacion">
     <div class="container">
@@ -250,7 +264,9 @@ const renderApp = () => {
   ].join('');
 };
 
-// ─── Event handlers ─────────────────────────────
+// ═══════════════════════════════════════════════════════════
+// EVENT HANDLERS
+// ═══════════════════════════════════════════════════════════
 
 const handleThemeToggle = (e: Event) => {
   const target = e.target as HTMLElement;
@@ -302,7 +318,9 @@ const handleScroll = () => {
   header.classList.toggle('scrolled', window.scrollY > 0);
 };
 
-// ─── Init ───────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
 
 const init = () => {
   initTheme();
@@ -316,7 +334,7 @@ const init = () => {
   });
   document.addEventListener('scroll', handleScroll, { passive: true });
 
-  // Entrance animations observer
+  // Entrance animations — staggered reveal (MD3 motion)
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {

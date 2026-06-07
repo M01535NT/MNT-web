@@ -1,16 +1,20 @@
-/* Footer — quiet, understated */
+/* ═══════════════════════════════════════════════════════════
+   Footer — MD3 surface-variant separator + muted typography
+   Spec: m3.color.surface-variant for subtle section separation
+   ═══════════════════════════════════════════════════════════ */
 
 .footer {
-  padding-block: var(--space-4);
-  border-top: var(--border-thin) solid var(--color-border);
+  padding-block: 2rem;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+  background: var(--md-sys-color-surface);
 }
 
 .footer__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-3);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 @media (min-width: 640px) {
@@ -24,9 +28,9 @@
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  font-weight: var(--weight-light);
+  font: var(--md-typescale-label);
+  font-weight: 400;
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .footer__brand-mark {
@@ -35,53 +39,63 @@
   justify-content: center;
   width: 28px;
   height: 28px;
-  background: var(--color-accent);
-  color: var(--color-accent-contrast);
-  border-radius: var(--radius-sm);
-  font-size: 0.625rem;
-  font-weight: var(--weight-semibold);
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border-radius: var(--md-sys-shape-corner-sm);
+  font: var(--md-typescale-label-small);
+  font-weight: 700;
 }
 
+/* Social icon buttons — MD3 Icon Button (spec: m3.components.icon-button.standard) */
 .footer__social {
   display: flex;
-  gap: var(--space-2);
+  gap: 0.5rem;
 }
 
 .footer__social-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-full);
-  transition: background var(--transition-base);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--md-sys-shape-corner-full);
+  color: var(--md-sys-color-on-surface-variant);
+  position: relative;
+  overflow: hidden;
+  transition: color var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
 }
 
-.footer__social-link:hover {
-  background: var(--color-surface);
+.footer__social-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: currentColor;
+  border-radius: inherit;
+  transition: opacity var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
+  pointer-events: none;
+}
+
+.footer__social-link:hover::after {
+  opacity: var(--md-sys-state-hover-opacity);
 }
 
 .footer__social-link svg {
-  width: 18px;
-  height: 18px;
-  stroke: var(--color-text-muted);
-  opacity: 0.6;
-  transition: all var(--transition-base);
+  width: 20px;
+  height: 20px;
 }
 
-.footer__social-link:hover svg {
-  stroke: var(--color-accent);
-  opacity: 0.9;
+.footer__social-link:hover {
+  color: var(--md-sys-color-primary);
 }
 
 .footer__bottom {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-1);
-  font-size: var(--text-xs);
-  color: var(--color-text-subtle);
-  font-weight: var(--weight-light);
+  gap: 0.5rem;
+  font: var(--md-typescale-label-small);
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 @media (min-width: 640px) {
@@ -89,4 +103,9 @@
     flex-direction: row;
     justify-content: space-between;
   }
+}
+
+.footer__copy,
+.footer__meta {
+  color: var(--md-sys-color-on-surface-variant);
 }

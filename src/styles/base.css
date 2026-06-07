@@ -1,190 +1,316 @@
-/* Base styles — Soft Intellectual */
+/* ═══════════════════════════════════════════════════════════
+   Base Styles — Material Design 3
+   Typography, containers, buttons, cards, stats band
+   All values via CSS Custom Properties defined in tokens.css
+   ═══════════════════════════════════════════════════════════ */
 
-@import '@fontsource-variable/dm-sans';
-@import './reset.css';
-@import './tokens.css';
-
-/* ─── Body ─── */
+/* ─── Body (spec: m3.typography.body-large) ─── */
 body {
-  font-family: var(--font-sans);
-  font-size: var(--text-base);
-  font-weight: var(--weight-regular);
-  line-height: var(--leading-normal);
-  color: var(--color-text);
-  background-color: var(--color-bg);
-  transition: background-color var(--transition-base), color var(--transition-base);
-  letter-spacing: -0.01em;
+  font: var(--md-typescale-body);
+  color: var(--md-sys-color-on-background);
+  background-color: var(--md-sys-color-background);
+  transition: background-color var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard),
+              color var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
 }
 
-/* ─── Container ─── */
+/* ─── Container (spec: m3.layout) ─── */
 .container {
   width: 100%;
-  max-width: var(--container-max);
+  max-width: var(--md-sys-layout-container-max);
   margin-inline: auto;
-  padding-inline: var(--space-2);
+  padding-inline: var(--md-sys-layout-gutter);
 }
 
 .container--narrow {
-  max-width: var(--container-narrow);
+  max-width: var(--md-sys-layout-container-narrow);
 }
 
-@media (min-width: 768px) {
-  .container {
-    padding-inline: var(--space-3);
-  }
-}
-
-/* ─── Sections — breathing room ─── */
+/* ─── Sections (spec: m3.layout.spacing) ─── */
 .section {
-  padding-block: var(--space-5);
+  padding-block: 3rem;  /* 48px — generous MD3 spacing */
 }
 
 .section__header {
-  margin-bottom: var(--space-4);
+  margin-bottom: 2rem;
 }
 
 .section__label {
   display: inline-block;
-  font-size: var(--text-xs);
-  font-weight: var(--weight-medium);
-  text-transform: uppercase;
+  font: var(--md-typescale-label);
+  color: var(--md-sys-color-primary);
   letter-spacing: 0.08em;
-  color: var(--color-accent);
-  margin-bottom: var(--space-1);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
 }
 
 .section__title {
-  font-size: var(--text-2xl);
-  font-weight: var(--weight-medium);
-  line-height: var(--leading-tight);
-  letter-spacing: -0.02em;
+  font: var(--md-typescale-headline);
+  font-weight: 500;
+  color: var(--md-sys-color-on-background);
+  letter-spacing: -0.25px;
 }
 
 @media (min-width: 768px) {
   .section {
-    padding-block: var(--space-6);
-  }
-  .section__title {
-    font-size: var(--text-3xl);
+    padding-block: 5rem;
   }
 }
 
-/* ─── Buttons — soft, warm ─── */
+/* ═══════════════════════════════════════════════════════════
+   MD3 BUTTONS (spec: m3.components.button)
+   ─────────────────────────────────────────────────────────
+   Variants: Filled (.btn--filled), Tonal (.btn--tonal),
+             Outlined (.btn--outlined), Text (.btn--text)
+   Shape: Full pill (--md-shape-button)
+   State layers: currentColor overlay on press/hover/focus
+   Motion: 200ms micro-interaction
+   ═══════════════════════════════════════════════════════════ */
+
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: 0.75rem 1.5rem;
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  line-height: 1;
-  border-radius: var(--radius-full);
-  transition: all var(--transition-base);
-  cursor: pointer;
-  min-height: 44px;
-  min-width: 44px;
   justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  font: var(--md-typescale-label);
+  border-radius: var(--md-shape-button);
+  cursor: pointer;
+  min-height: 40px;
+  min-width: 40px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
+  user-select: none;
   border: none;
 }
 
-.btn--primary {
-  background: var(--color-accent);
-  color: var(--color-accent-contrast);
+/* State layer pseudo-element (spec: m3.interaction.state-layer) */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: currentColor;
+  transition: opacity var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
+  pointer-events: none;
+  border-radius: inherit;
 }
 
-.btn--primary:hover {
-  background: var(--color-accent-light);
-  transform: translateY(-1px);
+.btn:hover::after {
+  opacity: var(--md-sys-state-hover-opacity);
 }
 
-.btn--primary:active {
-  background: var(--color-accent-dark);
-  transform: translateY(0);
+.btn:active::after {
+  opacity: var(--md-sys-state-pressed-opacity);
 }
 
-.btn--outline {
+.btn:focus-visible::after {
+  opacity: var(--md-sys-state-focus-opacity);
+}
+
+/* Filled Button (spec: m3.components.filled-button) */
+.btn--filled {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+.btn--filled:hover {
+  box-shadow: var(--md-sys-elevation-1);
+}
+.btn--filled:active {
+  box-shadow: none;
+}
+
+/* Tonal Button (spec: m3.components.filled-tonal-button) */
+.btn--tonal {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+.btn--tonal:hover {
+  box-shadow: var(--md-sys-elevation-1);
+}
+
+/* Outlined Button (spec: m3.components.outlined-button) */
+.btn--outlined {
+  background-color: transparent;
+  color: var(--md-sys-color-primary);
+  border: 1px solid var(--md-sys-color-outline);
+}
+.btn--outlined:hover {
+  background-color: transparent;
+}
+
+/* Text Button (spec: m3.components.text-button) */
+.btn--text {
+  background-color: transparent;
+  color: var(--md-sys-color-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MD3 ICON BUTTON (spec: m3.components.icon-button)
+   ─────────────────────────────────────────────────────────
+   Standard: 40x40px, circular, state layer on press.
+   ═══════════════════════════════════════════════════════════ */
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--md-sys-shape-corner-full);
+  color: var(--md-sys-color-on-surface-variant);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
   background: transparent;
-  color: var(--color-accent);
-  border: var(--border-thin) solid var(--color-accent);
 }
 
-.btn--outline:hover {
-  background: var(--color-accent-surface);
+.icon-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: currentColor;
+  border-radius: inherit;
+  transition: opacity var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
+  pointer-events: none;
 }
 
-.btn--ghost {
-  background: transparent;
-  color: var(--color-text-muted);
+.icon-btn:hover::after {
+  opacity: var(--md-sys-state-hover-opacity);
 }
 
-.btn--ghost:hover {
-  background: var(--color-surface);
-  color: var(--color-text);
+.icon-btn svg {
+  width: 24px;
+  height: 24px;
 }
 
-/* ─── Cards (soft surface) ─── */
-.card {
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  border: var(--border-thin) solid var(--color-border);
-  transition: all var(--transition-base);
+/* ═══════════════════════════════════════════════════════════
+   MD3 ELEVATED CARD (spec: m3.components.card.elevated)
+   ─────────────────────────────────────────────────────────
+   Rest: elevation-1 (shadow + surface-1 tonal tint)
+   Hover: elevation-2
+   NO border separation — elevation only.
+   ═══════════════════════════════════════════════════════════ */
+
+.card-elevated {
+  background: var(--md-sys-surface-1);
+  color: var(--md-sys-color-on-surface);
+  border-radius: var(--md-shape-card);
+  box-shadow: var(--md-sys-elevation-1);
+  transition: box-shadow var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard),
+              background var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
+  /* NO border — per spec: cards separate from background via elevation only */
 }
 
-.card:hover {
-  border-color: var(--color-accent);
+.card-elevated:hover {
+  box-shadow: var(--md-sys-elevation-2);
+  background: var(--md-sys-surface-2);
 }
 
-/* ─── Theme transition helper ─── */
-.theme-transitioning,
-.theme-transitioning * {
-  transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base) !important;
+/* ═══════════════════════════════════════════════════════════
+   MD3 OUTLINED CARD (spec: m3.components.card.outlined)
+   ─────────────────────────────────────────────────────────
+   Used for contact channels, subtle separation.
+   ═══════════════════════════════════════════════════════════ */
+
+.card-outlined {
+  background: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  border-radius: var(--md-shape-card);
+  border: 1px solid var(--md-sys-color-outline);
+  transition: border-color var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard),
+              box-shadow var(--md-sys-motion-duration-short4) var(--md-sys-motion-easing-standard);
 }
 
-/* ─── Stats band — warm, understated ─── */
+.card-outlined:hover {
+  border-color: var(--md-sys-color-on-surface-variant);
+  box-shadow: var(--md-sys-elevation-1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Stats Band — MD3 styled data display
+   Uses Inverse Surface for visual distinction (spec: m3.color.inverse-surface)
+   ═══════════════════════════════════════════════════════════ */
+
 .stats-band {
-  padding-block: var(--space-4);
-  background: var(--color-surface);
-  border-top: var(--border-thin) solid var(--color-border);
-  border-bottom: var(--border-thin) solid var(--color-border);
+  padding-block: 2.5rem;
+  background: var(--md-sys-color-surface-variant);
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .stats-band__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-2);
+  gap: 1rem;
   text-align: center;
 }
 
 .stats-band__item {
-  padding: var(--space-2);
+  padding: 1rem;
 }
 
 .stats-band__value {
   display: block;
-  font-size: var(--text-3xl);
-  font-weight: var(--weight-medium);
-  color: var(--color-accent);
-  line-height: 1;
-  letter-spacing: -0.03em;
+  font: var(--md-typescale-headline);
+  font-weight: 700;
+  color: var(--md-sys-color-primary);
+  line-height: 1.2;
+  letter-spacing: -0.25px;
   margin-bottom: 0.25rem;
 }
 
 .stats-band__label {
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  font: var(--md-typescale-label-small);
+  color: var(--md-sys-color-on-surface-variant);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-weight: var(--weight-light);
+  letter-spacing: 0.08em;
 }
 
 @media (min-width: 768px) {
   .stats-band {
-    padding-block: var(--space-5);
+    padding-block: 3rem;
   }
   .stats-band__grid {
-    gap: var(--space-4);
+    gap: 2rem;
   }
-  .stats-band__value {
-    font-size: var(--text-4xl);
-  }
+}
+
+/* ─── Theme transition helper (spec: m3.motion) ─── */
+.theme-transitioning,
+.theme-transitioning * {
+  transition: background-color var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard),
+              color var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard),
+              border-color var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard) !important;
+}
+
+/* ─── Entrance animation (MD3 staggered reveal) ─── */
+.animate-in {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard),
+              transform var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard);
+}
+
+.animate-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delay — applied via inline style --i */
+.animate-in[style*="--i: 0"] { transition-delay: 0ms; }
+.animate-in[style*="--i: 1"] { transition-delay: 50ms; }
+.animate-in[style*="--i: 2"] { transition-delay: 100ms; }
+.animate-in[style*="--i: 3"] { transition-delay: 150ms; }
+.animate-in[style*="--i: 4"] { transition-delay: 200ms; }
+.animate-in[style*="--i: 5"] { transition-delay: 250ms; }
+.animate-in[style*="--i: 6"] { transition-delay: 300ms; }
+.animate-in[style*="--i: 7"] { transition-delay: 350ms; }
+
+/* ─── Separator (MD3 Divider equivalent) ─── */
+.md-divider {
+  height: 1px;
+  background: var(--md-sys-color-outline-variant);
+  margin: 0;
 }

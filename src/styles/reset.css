@@ -1,4 +1,9 @@
-/* CSS Reset — minimal, brutalist-friendly */
+/* ═══════════════════════════════════════════════════════════
+   CSS Reset — MD3 baseline
+   Spec: m3.material.io — foundational reset preserving
+         typography, shape, and color token consumption.
+   ═══════════════════════════════════════════════════════════ */
+
 *,
 *::before,
 *::after {
@@ -54,21 +59,19 @@ ol {
   list-style: none;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-weight: inherit;
   font-size: inherit;
 }
 
+/* ─── MD3 focus ring (spec: m3.interaction.focus) ─── */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--md-sys-color-primary);
   outline-offset: 2px;
+  border-radius: var(--md-sys-shape-corner-xs);
 }
 
+/* Reduced motion — MD3 a11y (spec: m3.motion.accessibility) */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

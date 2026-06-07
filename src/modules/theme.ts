@@ -1,4 +1,8 @@
-// Theme — toggle light/dark con persistencia y respeto a prefers-color-scheme
+// ═══════════════════════════════════════════════════════════
+// Theme — MD3 light/dark toggle with persistence
+// Uses data-theme attribute + MD3 surface tonal elevation tokens
+// Spec: m3.material.io — color scheme switching
+// ═══════════════════════════════════════════════════════════
 
 const STORAGE_KEY = 'mnt-theme';
 
@@ -11,18 +15,22 @@ const getInitialTheme = (): Theme => {
   } catch {
     // localStorage no disponible
   }
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  // MD3: default to light theme (tokens defined as light-first)
+  return 'light';
 };
 
 const applyTheme = (theme: Theme) => {
   document.documentElement.dataset.theme = theme;
-  // Actualiza el theme-color del navegador según el modo
+
+  // MD3: theme-color meta tag updates per scheme
   document
     .querySelectorAll('meta[name="theme-color"]')
     .forEach((m) => m.remove());
+
   const metaTag = document.createElement('meta');
   metaTag.name = 'theme-color';
-  metaTag.content = theme === 'dark' ? '#000000' : '#ffffff';
+  // MD3 surface colors for browser chrome
+  metaTag.content = theme === 'dark' ? '#15202B' : '#FFFFFF';
   document.head.appendChild(metaTag);
 };
 
@@ -35,7 +43,7 @@ export const toggleTheme = (): Theme => {
   const current = (document.documentElement.dataset.theme as Theme) || 'light';
   const next: Theme = current === 'dark' ? 'light' : 'dark';
 
-  // Transición suave entre temas
+  // MD3 motion curve: standard easing, 300ms layout change
   document.documentElement.classList.add('theme-transitioning');
   applyTheme(next);
   try {
@@ -45,12 +53,12 @@ export const toggleTheme = (): Theme => {
   }
   window.setTimeout(() => {
     document.documentElement.classList.remove('theme-transitioning');
-  }, 220);
+  }, 300);  // matches --md-sys-motion-duration-medium2
 
   return next;
 };
 
-// Escuchar cambios del sistema si el usuario no ha elegido manualmente
+// Watch system preference changes only if user hasn't manually chosen
 export const watchSystemTheme = () => {
   const mq = window.matchMedia('(prefers-color-scheme: dark)');
   mq.addEventListener('change', (e) => {
