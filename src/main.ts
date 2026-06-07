@@ -3,6 +3,8 @@
 // Componentes mapeados a especificación MD3 oficial de Google
 // ═══════════════════════════════════════════════════════════
 
+import './styles/tokens.css';
+import './styles/reset.css';
 import './styles/base.css';
 import './styles/components/header.css';
 import './styles/components/hero.css';
