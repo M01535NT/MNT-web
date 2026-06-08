@@ -11,6 +11,7 @@ export default defineConfig({
         name: 'MNT — Moisés Núñez',
         short_name: 'MNT',
         description: 'Consultor inmobiliario en Tijuana, BC.',
+        lang: 'es-MX',
         theme_color: '#FFFFFF',
         background_color: '#FFFFFF',
         display: 'standalone',

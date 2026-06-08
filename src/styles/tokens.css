@@ -6,10 +6,7 @@
    ═══════════════════════════════════════════════════════════ */
 
 :root {
-  /* ─── MD3 Color — Light Theme (spec: m3.color) ───────────────
-     Source color: #1D9BF0 (X / Twitter Blue)
-     Generated per MD3 tonal palette + contrast requirements
-     Validated WCAG AA for all on-*/container pairs (>4.5:1) */
+  /* MD3 Color — Light Theme. Source: #1D9BF0. */
   --md-sys-color-primary: #1D9BF0;
   --md-sys-color-on-primary: #FFFFFF;
   --md-sys-color-primary-container: #E8F5FD;
