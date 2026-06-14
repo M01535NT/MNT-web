@@ -227,7 +227,7 @@ const prepareTextMotion = () => {
         return;
       }
 
-      span.className = `word-reveal word-reveal--${wordIndex % 2 === 0 ? 'left' : 'right'}`;
+      span.className = wordIndex % 2 === 0 ? 'word-reveal word-reveal--left' : 'word-reveal';
       span.style.setProperty('--word-index', String(wordIndex));
       span.textContent = part;
       title.appendChild(span);
@@ -284,41 +284,52 @@ const handleVCard = (e: Event) => {
   });
 };
 
-const handleScroll = () => {
-  const header = document.getElementById('header');
-  if (!header) return;
-  header.classList.toggle('scrolled', window.scrollY > 4);
+const handleScroll = (header: HTMLElement | null) => {
+  header?.classList.toggle('scrolled', window.scrollY > 4);
 };
 
 const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
 const initMotion = () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) {
-    document.querySelectorAll('.animate-in').forEach(el => el.classList.add('is-visible'));
-    return;
-  }
+  if (reduceMotion) return;
 
-  const scenes = [...document.querySelectorAll<HTMLElement>('.scroll-scene')];
+  const scenes = [...document.querySelectorAll<HTMLElement>('.scroll-scene')]
+    .map(scene => ({
+      scene,
+      words: [...scene.querySelectorAll<HTMLElement>('.word-reveal')].map(word => ({
+        word,
+        index: Number(word.style.getPropertyValue('--word-index')) || 0,
+        direction: word.classList.contains('word-reveal--left') ? -1 : 1,
+        lastProgress: -1,
+      })),
+    }))
+    .filter(scene => scene.words.length > 0);
+
+  if (!scenes.length) return;
+
   document.documentElement.classList.add('scroll-motion-ready');
 
   let ticking = false;
   const updateScrollMotion = () => {
     const viewport = window.innerHeight || 1;
     const navOffset = 48;
+    const activationDistance = viewport * 0.76;
 
-    scenes.forEach(scene => {
+    scenes.forEach(({ scene, words }) => {
       const rect = scene.getBoundingClientRect();
-      const sceneProgress = clamp((viewport - rect.top - navOffset) / (viewport * 0.76));
+      if (rect.bottom < -viewport * 0.25 || rect.top > viewport * 1.25) return;
 
-      scene.querySelectorAll<HTMLElement>('.word-reveal').forEach(word => {
-        const index = Number(word.style.getPropertyValue('--word-index')) || 0;
-        const wordProgress = clamp((sceneProgress - index * 0.045) / 0.68);
-        const direction = word.classList.contains('word-reveal--left') ? -1 : 1;
+      const sceneProgress = clamp((viewport - rect.top - navOffset) / activationDistance);
 
-        word.style.setProperty('--word-opacity', wordProgress.toFixed(3));
-        word.style.setProperty('--word-offset', `${((1 - wordProgress) * direction * 76).toFixed(2)}px`);
-        word.style.setProperty('--word-blur', `${((1 - wordProgress) * 14).toFixed(2)}px`);
+      words.forEach(item => {
+        const wordProgress = Number(clamp((sceneProgress - item.index * 0.045) / 0.68).toFixed(3));
+        if (wordProgress === item.lastProgress) return;
+        item.lastProgress = wordProgress;
+
+        item.word.style.setProperty('--word-opacity', String(wordProgress));
+        item.word.style.setProperty('--word-offset', `${((1 - wordProgress) * item.direction * 76).toFixed(2)}px`);
+        item.word.style.setProperty('--word-blur', `${((1 - wordProgress) * 14).toFixed(2)}px`);
       });
     });
 
@@ -356,7 +367,9 @@ const init = () => {
     handleShare(e);
     handleVCard(e);
   });
-  document.addEventListener('scroll', handleScroll, { passive: true });
+  const header = document.getElementById('header');
+  handleScroll(header);
+  document.addEventListener('scroll', () => handleScroll(header), { passive: true });
 
   document.addEventListener('click', (e) => {
     const a = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null;
