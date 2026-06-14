@@ -15,8 +15,8 @@ const getInitialTheme = (): Theme => {
   } catch {
     // localStorage no disponible
   }
-  // Premium vCard: default to dark luxury theme.
-  return 'dark';
+  // Apple Clean Realty: default to light, modern real-estate theme.
+  return 'light';
 };
 
 const applyTheme = (theme: Theme) => {
@@ -30,7 +30,7 @@ const applyTheme = (theme: Theme) => {
   const metaTag = document.createElement('meta');
   metaTag.name = 'theme-color';
   // MD3 surface colors for browser chrome
-  metaTag.content = theme === 'dark' ? '#080B10' : '#F5EFE5';
+  metaTag.content = theme === 'dark' ? '#000000' : '#F5F5F7';
   document.head.appendChild(metaTag);
 };
 

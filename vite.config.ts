@@ -10,10 +10,10 @@ export default defineConfig({
       manifest: {
         name: 'MNT — Moisés Núñez',
         short_name: 'MNT',
-        description: 'Abogado y asesor inmobiliario con estrategia, confianza y visión patrimonial.',
+        description: 'Asesor inmobiliario con respaldo legal. Compra, venta y estrategia patrimonial con claridad.',
         lang: 'es-MX',
-        theme_color: '#080B10',
-        background_color: '#080B10',
+        theme_color: '#F5F5F7',
+        background_color: '#F5F5F7',
         display: 'standalone',
         start_url: '/',
         icons: [
