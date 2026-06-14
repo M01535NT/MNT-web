@@ -686,10 +686,97 @@ body::after {
   filter: blur(0);
 }
 
+.motion-title {
+  overflow: hidden;
+}
+
+.word-reveal {
+  display: inline-block;
+}
+
+.word-space {
+  display: inline;
+}
+
+.word-reveal {
+  opacity: 1;
+  transform: translateX(0);
+  filter: blur(0);
+  will-change: transform, opacity, filter;
+}
+
+.scroll-scene.scene-visible .word-reveal--left {
+  animation: word-enter-left 1050ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--word-index, 0) * 58ms);
+}
+
+.scroll-scene.scene-visible .word-reveal--right {
+  animation: word-enter-right 1050ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--word-index, 0) * 58ms);
+}
+
+.scroll-scene.scene-visible .apple-eyebrow,
+.apple-tile.scroll-scene.scene-visible .apple-eyebrow,
+.scroll-scene.scene-visible .apple-subhead,
+.apple-tile.scroll-scene.scene-visible > p:not(.apple-eyebrow),
+.scroll-scene.scene-visible .apple-tile > p:not(.apple-eyebrow),
+.scroll-scene.scene-visible .apple-section__inner > p:not(.apple-eyebrow),
+.scroll-scene.scene-visible .apple-contact__inner > p,
+.scroll-scene.scene-visible .apple-process__item p,
+.scroll-scene.scene-visible .apple-quick__item small {
+  animation: elegant-fade-in 1300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 180ms;
+}
+
 .scroll-scene.scene-visible .animate-in,
 .scroll-scene.scene-visible.animate-in {
-  animation: apple-reveal 880ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: elegant-fade-in 980ms cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+.apple-device.scroll-scene.scene-visible,
+.scroll-scene.scene-visible .apple-device,
+.apple-tile.scroll-scene.scene-visible,
+.scroll-scene.scene-visible .apple-quick__item,
+.scroll-scene.scene-visible .apple-process__item {
+  animation-name: apple-reveal;
+}
+
+@keyframes word-enter-left {
+  from {
+    opacity: 0;
+    transform: translateX(-72px);
+    filter: blur(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes word-enter-right {
+  from {
+    opacity: 0;
+    transform: translateX(72px);
+    filter: blur(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes elegant-fade-in {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
 }
 
 @keyframes apple-reveal {

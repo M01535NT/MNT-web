@@ -203,6 +203,39 @@ const renderFooter = () => `
   </footer>
 `;
 
+const prepareTextMotion = () => {
+  const titles = document.querySelectorAll<HTMLHeadingElement>('main h1, main h2, main h3');
+
+  titles.forEach(title => {
+    const text = title.textContent?.trim();
+    if (!text || title.dataset.motionReady === 'true') return;
+
+    title.dataset.motionReady = 'true';
+    title.classList.add('motion-title');
+    title.textContent = '';
+
+    let wordIndex = 0;
+
+    text.split(/(\s+)/).forEach((part) => {
+      if (!part) return;
+
+      const span = document.createElement('span');
+      if (/^\s+$/.test(part)) {
+        span.className = 'word-space';
+        span.textContent = part;
+        title.appendChild(span);
+        return;
+      }
+
+      span.className = `word-reveal word-reveal--${wordIndex % 2 === 0 ? 'left' : 'right'}`;
+      span.style.setProperty('--word-index', String(wordIndex));
+      span.textContent = part;
+      title.appendChild(span);
+      wordIndex += 1;
+    });
+  });
+};
+
 const renderApp = () => {
   const app = document.getElementById('app');
   if (!app) return;
@@ -218,6 +251,7 @@ const renderApp = () => {
     '</main>',
     renderFooter(),
   ].join('');
+  prepareTextMotion();
 };
 
 const handleThemeToggle = (e: Event) => {
@@ -260,17 +294,21 @@ const initMotion = () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) {
     document.querySelectorAll('.animate-in').forEach(el => el.classList.add('is-visible'));
+    document.querySelectorAll('.scroll-scene').forEach(el => el.classList.add('scene-visible'));
     return;
   }
 
+  const sceneObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('scene-visible', entry.isIntersecting);
+    });
+  }, { threshold: 0.38, rootMargin: '0px 0px -12% 0px' });
+
+  document.querySelectorAll('.scroll-scene').forEach(el => sceneObserver.observe(el));
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        const scene = entry.target.closest('.scroll-scene');
-        scene?.classList.add('scene-visible');
-        observer.unobserve(entry.target);
-      }
+      entry.target.classList.toggle('is-visible', entry.isIntersecting);
     });
   }, { threshold: 0.26, rootMargin: '0px 0px -14% 0px' });
 
