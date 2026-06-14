@@ -290,6 +290,8 @@ const handleScroll = () => {
   header.classList.toggle('scrolled', window.scrollY > 4);
 };
 
+const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
 const initMotion = () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) {
@@ -298,21 +300,52 @@ const initMotion = () => {
     return;
   }
 
-  const sceneObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      entry.target.classList.toggle('scene-visible', entry.isIntersecting);
+  const scenes = [...document.querySelectorAll<HTMLElement>('.scroll-scene')];
+  document.documentElement.classList.add('scroll-motion-ready');
+
+  let ticking = false;
+  const updateScrollMotion = () => {
+    const viewport = window.innerHeight || 1;
+    const navOffset = 48;
+
+    scenes.forEach(scene => {
+      const rect = scene.getBoundingClientRect();
+      const sceneProgress = clamp((viewport - rect.top - navOffset) / (viewport * 0.76));
+      const copyProgress = clamp((sceneProgress - 0.08) / 0.92);
+      const copyOffset = (1 - copyProgress) * 18;
+
+      scene.classList.toggle('scene-visible', sceneProgress > 0.02);
+      scene.style.setProperty('--scene-progress', sceneProgress.toFixed(3));
+      scene.style.setProperty('--copy-progress', copyProgress.toFixed(3));
+      scene.style.setProperty('--copy-opacity', copyProgress.toFixed(3));
+      scene.style.setProperty('--copy-blur', `${((1 - copyProgress) * 10).toFixed(2)}px`);
+      scene.style.setProperty('--copy-offset', `${copyOffset.toFixed(2)}px`);
+      scene.style.setProperty('--scene-saturation', (0.9 + sceneProgress * 0.1).toFixed(3));
+      scene.style.setProperty('--scene-brightness', (0.965 + sceneProgress * 0.035).toFixed(3));
+
+      scene.querySelectorAll<HTMLElement>('.word-reveal').forEach(word => {
+        const index = Number(word.style.getPropertyValue('--word-index')) || 0;
+        const wordProgress = clamp((sceneProgress - index * 0.045) / 0.68);
+        const direction = word.classList.contains('word-reveal--left') ? -1 : 1;
+
+        word.style.setProperty('--word-opacity', wordProgress.toFixed(3));
+        word.style.setProperty('--word-offset', `${((1 - wordProgress) * direction * 76).toFixed(2)}px`);
+        word.style.setProperty('--word-blur', `${((1 - wordProgress) * 14).toFixed(2)}px`);
+      });
     });
-  }, { threshold: 0.38, rootMargin: '0px 0px -12% 0px' });
 
-  document.querySelectorAll('.scroll-scene').forEach(el => sceneObserver.observe(el));
+    ticking = false;
+  };
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      entry.target.classList.toggle('is-visible', entry.isIntersecting);
-    });
-  }, { threshold: 0.26, rootMargin: '0px 0px -14% 0px' });
+  const requestScrollMotion = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(updateScrollMotion);
+  };
 
-  document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+  updateScrollMotion();
+  window.addEventListener('scroll', requestScrollMotion, { passive: true });
+  window.addEventListener('resize', requestScrollMotion, { passive: true });
 
   const device = document.querySelector('.apple-device') as HTMLElement | null;
   window.addEventListener('pointermove', (event) => {

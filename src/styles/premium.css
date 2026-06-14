@@ -705,41 +705,39 @@ body::after {
   will-change: transform, opacity, filter;
 }
 
-.scroll-scene.scene-visible .word-reveal--left {
-  animation: word-enter-left 1050ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: calc(var(--word-index, 0) * 58ms);
+.scroll-motion-ready .scroll-scene {
+  filter: saturate(var(--scene-saturation, 1)) brightness(var(--scene-brightness, 1));
 }
 
-.scroll-scene.scene-visible .word-reveal--right {
-  animation: word-enter-right 1050ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: calc(var(--word-index, 0) * 58ms);
+.scroll-motion-ready .word-reveal {
+  opacity: var(--word-opacity, 0);
+  transform: translateX(var(--word-offset, 0));
+  filter: blur(var(--word-blur, 0));
+  transition: opacity 70ms linear, transform 70ms linear, filter 70ms linear;
 }
 
-.scroll-scene.scene-visible .apple-eyebrow,
-.apple-tile.scroll-scene.scene-visible .apple-eyebrow,
-.scroll-scene.scene-visible .apple-subhead,
-.apple-tile.scroll-scene.scene-visible > p:not(.apple-eyebrow),
-.scroll-scene.scene-visible .apple-tile > p:not(.apple-eyebrow),
-.scroll-scene.scene-visible .apple-section__inner > p:not(.apple-eyebrow),
-.scroll-scene.scene-visible .apple-contact__inner > p,
-.scroll-scene.scene-visible .apple-process__item p,
-.scroll-scene.scene-visible .apple-quick__item small {
-  animation: elegant-fade-in 1300ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 180ms;
+.scroll-motion-ready .scroll-scene .apple-eyebrow,
+.scroll-motion-ready .apple-tile.scroll-scene .apple-eyebrow,
+.scroll-motion-ready .scroll-scene .apple-subhead,
+.scroll-motion-ready .apple-tile.scroll-scene > p:not(.apple-eyebrow),
+.scroll-motion-ready .scroll-scene .apple-tile > p:not(.apple-eyebrow),
+.scroll-motion-ready .scroll-scene .apple-section__inner > p:not(.apple-eyebrow),
+.scroll-motion-ready .scroll-scene .apple-contact__inner > p,
+.scroll-motion-ready .scroll-scene .apple-process__item p,
+.scroll-motion-ready .scroll-scene .apple-quick__item small,
+.scroll-motion-ready .scroll-scene .animate-in,
+.scroll-motion-ready .scroll-scene.animate-in {
+  opacity: var(--copy-opacity, 0);
+  transform: translateY(var(--copy-offset, 0));
+  filter: blur(var(--copy-blur, 0));
+  transition: opacity 90ms linear, transform 90ms linear, filter 90ms linear;
 }
 
-.scroll-scene.scene-visible .animate-in,
-.scroll-scene.scene-visible.animate-in {
-  animation: elegant-fade-in 980ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: calc(var(--i, 0) * 90ms);
-}
-
-.apple-device.scroll-scene.scene-visible,
-.scroll-scene.scene-visible .apple-device,
-.apple-tile.scroll-scene.scene-visible,
-.scroll-scene.scene-visible .apple-quick__item,
-.scroll-scene.scene-visible .apple-process__item {
-  animation-name: apple-reveal;
+.scroll-motion-ready .apple-device,
+.scroll-motion-ready .apple-quick__item,
+.scroll-motion-ready .apple-process__item,
+.scroll-motion-ready .apple-tile {
+  will-change: transform, opacity, filter;
 }
 
 @keyframes word-enter-left {
