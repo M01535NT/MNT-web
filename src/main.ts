@@ -314,7 +314,8 @@ const initMotion = () => {
   const updateScrollMotion = () => {
     const viewport = window.innerHeight || 1;
     const navOffset = 48;
-    const activationDistance = viewport * 0.76;
+    const isMobile = window.matchMedia('(max-width: 760px)').matches;
+    const activationDistance = viewport * (isMobile ? 0.5 : 0.76);
 
     scenes.forEach(({ scene, words }) => {
       const rect = scene.getBoundingClientRect();
