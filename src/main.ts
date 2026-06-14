@@ -93,7 +93,7 @@ const renderHeader = () => `
 `;
 
 const renderHero = () => `
-  <section class="apple-hero" id="top">
+  <section class="apple-hero scroll-scene" id="top">
     <div class="apple-hero__copy animate-in">
       <p class="apple-eyebrow">${PROFILE.role}</p>
       <h1>${PROFILE.tagline}</h1>
@@ -119,7 +119,7 @@ const renderHero = () => `
 `;
 
 const renderQuickActions = () => `
-  <section class="apple-quick" aria-label="Accesos rápidos">
+  <section class="apple-quick scroll-scene" aria-label="Accesos rápidos">
     ${QUICK_ACTIONS.map((action, i) => {
       const attrs = action.external ? 'target="_blank" rel="noopener noreferrer"' : '';
       return `
@@ -135,7 +135,7 @@ const renderQuickActions = () => `
 const renderServices = () => `
   <section class="apple-grid" id="servicios" aria-label="Servicios inmobiliarios">
     ${SERVICES.map((service, i) => `
-      <article class="apple-tile ${i === 2 ? 'apple-tile--dark' : ''} animate-in" style="--i: ${i}">
+      <article class="apple-tile scroll-scene ${i === 2 ? 'apple-tile--dark' : ''} animate-in" style="--i: ${i}">
         <p class="apple-eyebrow">${service.eyebrow}</p>
         <h2>${service.title}</h2>
         <p>${service.description}</p>
@@ -147,7 +147,7 @@ const renderServices = () => `
 `;
 
 const renderPositioning = () => `
-  <section class="apple-section apple-section--white" aria-label="Diferenciador">
+  <section class="apple-section apple-section--white scroll-scene" aria-label="Diferenciador">
     <div class="apple-section__inner animate-in">
       <p class="apple-eyebrow">Visión integral</p>
       <h2>Inmobiliario primero. Legal cuando importa.</h2>
@@ -157,8 +157,8 @@ const renderPositioning = () => `
 `;
 
 const renderProcess = () => `
-  <section class="apple-section" id="proceso" aria-label="Proceso de trabajo">
-    <div class="apple-section__inner">
+  <section class="apple-section scroll-scene" id="proceso" aria-label="Proceso de trabajo">
+    <div class="apple-section__inner animate-in">
       <p class="apple-eyebrow">Proceso</p>
       <h2>Una ruta clara para avanzar.</h2>
       <div class="apple-process">
@@ -174,7 +174,7 @@ const renderProcess = () => `
 `;
 
 const renderContact = () => `
-  <section class="apple-contact" id="contacto" aria-label="Contacto">
+  <section class="apple-contact scroll-scene" id="contacto" aria-label="Contacto">
     <div class="apple-contact__inner animate-in">
       <p class="apple-eyebrow">Contacto directo</p>
       <h2>Agenda una asesoría.</h2>
@@ -267,10 +267,12 @@ const initMotion = () => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-visible');
+        const scene = entry.target.closest('.scroll-scene');
+        scene?.classList.add('scene-visible');
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.26, rootMargin: '0px 0px -14% 0px' });
 
   document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
 
@@ -284,11 +286,42 @@ const initMotion = () => {
   }, { passive: true });
 };
 
+const initMobileSceneScroll = () => {
+  const mobileQuery = window.matchMedia('(max-width: 760px)');
+  let snapTimer: number | undefined;
+  let programmatic = false;
+
+  const snapToNearestScene = () => {
+    if (!mobileQuery.matches || programmatic) return;
+    const scenes = [...document.querySelectorAll<HTMLElement>('.scroll-scene')];
+    if (!scenes.length) return;
+
+    const current = window.scrollY;
+    const navOffset = 48;
+    const nearest = scenes.reduce((closest, scene) => {
+      const distance = Math.abs(scene.offsetTop - navOffset - current);
+      const closestDistance = Math.abs(closest.offsetTop - navOffset - current);
+      return distance < closestDistance ? scene : closest;
+    }, scenes[0]);
+
+    programmatic = true;
+    window.scrollTo({ top: Math.max(0, nearest.offsetTop - navOffset), behavior: 'smooth' });
+    window.setTimeout(() => { programmatic = false; }, 520);
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!mobileQuery.matches || programmatic) return;
+    window.clearTimeout(snapTimer);
+    snapTimer = window.setTimeout(snapToNearestScene, 115);
+  }, { passive: true });
+};
+
 const init = () => {
   initTheme();
   watchSystemTheme();
   renderApp();
   initMotion();
+  initMobileSceneScroll();
 
   document.addEventListener('click', (e) => {
     handleThemeToggle(e);
