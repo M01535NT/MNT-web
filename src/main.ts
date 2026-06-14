@@ -296,7 +296,6 @@ const initMotion = () => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) {
     document.querySelectorAll('.animate-in').forEach(el => el.classList.add('is-visible'));
-    document.querySelectorAll('.scroll-scene').forEach(el => el.classList.add('scene-visible'));
     return;
   }
 
@@ -311,17 +310,6 @@ const initMotion = () => {
     scenes.forEach(scene => {
       const rect = scene.getBoundingClientRect();
       const sceneProgress = clamp((viewport - rect.top - navOffset) / (viewport * 0.76));
-      const copyProgress = clamp((sceneProgress - 0.08) / 0.92);
-      const copyOffset = (1 - copyProgress) * 18;
-
-      scene.classList.toggle('scene-visible', sceneProgress > 0.02);
-      scene.style.setProperty('--scene-progress', sceneProgress.toFixed(3));
-      scene.style.setProperty('--copy-progress', copyProgress.toFixed(3));
-      scene.style.setProperty('--copy-opacity', copyProgress.toFixed(3));
-      scene.style.setProperty('--copy-blur', `${((1 - copyProgress) * 10).toFixed(2)}px`);
-      scene.style.setProperty('--copy-offset', `${copyOffset.toFixed(2)}px`);
-      scene.style.setProperty('--scene-saturation', (0.9 + sceneProgress * 0.1).toFixed(3));
-      scene.style.setProperty('--scene-brightness', (0.965 + sceneProgress * 0.035).toFixed(3));
 
       scene.querySelectorAll<HTMLElement>('.word-reveal').forEach(word => {
         const index = Number(word.style.getPropertyValue('--word-index')) || 0;
@@ -357,42 +345,11 @@ const initMotion = () => {
   }, { passive: true });
 };
 
-const initMobileSceneScroll = () => {
-  const mobileQuery = window.matchMedia('(max-width: 760px)');
-  let snapTimer: number | undefined;
-  let programmatic = false;
-
-  const snapToNearestScene = () => {
-    if (!mobileQuery.matches || programmatic) return;
-    const scenes = [...document.querySelectorAll<HTMLElement>('.scroll-scene')];
-    if (!scenes.length) return;
-
-    const current = window.scrollY;
-    const navOffset = 48;
-    const nearest = scenes.reduce((closest, scene) => {
-      const distance = Math.abs(scene.offsetTop - navOffset - current);
-      const closestDistance = Math.abs(closest.offsetTop - navOffset - current);
-      return distance < closestDistance ? scene : closest;
-    }, scenes[0]);
-
-    programmatic = true;
-    window.scrollTo({ top: Math.max(0, nearest.offsetTop - navOffset), behavior: 'smooth' });
-    window.setTimeout(() => { programmatic = false; }, 520);
-  };
-
-  window.addEventListener('scroll', () => {
-    if (!mobileQuery.matches || programmatic) return;
-    window.clearTimeout(snapTimer);
-    snapTimer = window.setTimeout(snapToNearestScene, 115);
-  }, { passive: true });
-};
-
 const init = () => {
   initTheme();
   watchSystemTheme();
   renderApp();
   initMotion();
-  initMobileSceneScroll();
 
   document.addEventListener('click', (e) => {
     handleThemeToggle(e);
@@ -409,7 +366,7 @@ const init = () => {
     const el = document.querySelector(href);
     if (!el) return;
     e.preventDefault();
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.scrollIntoView({ block: 'start' });
   });
 };
 

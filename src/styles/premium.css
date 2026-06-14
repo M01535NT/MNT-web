@@ -705,39 +705,11 @@ body::after {
   will-change: transform, opacity, filter;
 }
 
-.scroll-motion-ready .scroll-scene {
-  filter: saturate(var(--scene-saturation, 1)) brightness(var(--scene-brightness, 1));
-}
-
 .scroll-motion-ready .word-reveal {
   opacity: var(--word-opacity, 0);
   transform: translateX(var(--word-offset, 0));
   filter: blur(var(--word-blur, 0));
   transition: opacity 70ms linear, transform 70ms linear, filter 70ms linear;
-}
-
-.scroll-motion-ready .scroll-scene .apple-eyebrow,
-.scroll-motion-ready .apple-tile.scroll-scene .apple-eyebrow,
-.scroll-motion-ready .scroll-scene .apple-subhead,
-.scroll-motion-ready .apple-tile.scroll-scene > p:not(.apple-eyebrow),
-.scroll-motion-ready .scroll-scene .apple-tile > p:not(.apple-eyebrow),
-.scroll-motion-ready .scroll-scene .apple-section__inner > p:not(.apple-eyebrow),
-.scroll-motion-ready .scroll-scene .apple-contact__inner > p,
-.scroll-motion-ready .scroll-scene .apple-process__item p,
-.scroll-motion-ready .scroll-scene .apple-quick__item small,
-.scroll-motion-ready .scroll-scene .animate-in,
-.scroll-motion-ready .scroll-scene.animate-in {
-  opacity: var(--copy-opacity, 0);
-  transform: translateY(var(--copy-offset, 0));
-  filter: blur(var(--copy-blur, 0));
-  transition: opacity 90ms linear, transform 90ms linear, filter 90ms linear;
-}
-
-.scroll-motion-ready .apple-device,
-.scroll-motion-ready .apple-quick__item,
-.scroll-motion-ready .apple-process__item,
-.scroll-motion-ready .apple-tile {
-  will-change: transform, opacity, filter;
 }
 
 @keyframes word-enter-left {
@@ -828,32 +800,15 @@ body::after {
   scroll-margin-top: 48px;
 }
 
-.scroll-scene.scene-visible {
-  animation: scene-breathe 1000ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes scene-breathe {
-  from { filter: saturate(0.86) brightness(0.97); }
-  to { filter: saturate(1) brightness(1); }
-}
-
 @media (max-width: 760px) {
-  html,
   body {
-    scroll-snap-type: y mandatory;
-    scroll-padding-top: 48px;
-  }
-
-  body {
-    overscroll-behavior-y: contain;
+    overscroll-behavior-y: auto;
   }
 
   .scroll-scene {
     height: calc(100svh - 48px);
     min-height: calc(100svh - 48px);
     overflow: hidden;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
   }
 
   .apple-nav {
