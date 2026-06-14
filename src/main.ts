@@ -204,7 +204,7 @@ const renderFooter = () => `
 `;
 
 const prepareTextMotion = () => {
-  const titles = document.querySelectorAll<HTMLHeadingElement>('main h1, main h2, main h3');
+  const titles = document.querySelectorAll<HTMLHeadingElement>('main h1, main h2');
 
   titles.forEach(title => {
     const text = title.textContent?.trim();

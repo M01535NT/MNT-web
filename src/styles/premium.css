@@ -741,13 +741,16 @@ body::after {
 }
 
 @media (max-width: 760px) {
+  :root {
+    --mobile-scene-height: calc(100svh - 48px);
+  }
+
   body {
     overscroll-behavior-y: auto;
   }
 
   .scroll-scene {
-    height: auto;
-    min-height: 0;
+    min-height: var(--mobile-scene-height);
     overflow: visible;
   }
 
@@ -763,9 +766,9 @@ body::after {
   }
 
   .apple-hero {
-    min-height: auto;
+    min-height: var(--mobile-scene-height);
     padding: 2.1rem 16px 1.25rem;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 0.45rem;
   }
 
@@ -827,7 +830,7 @@ body::after {
   }
 
   .apple-quick {
-    min-height: auto;
+    min-height: var(--mobile-scene-height);
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-content: center;
     gap: 10px;
@@ -846,7 +849,7 @@ body::after {
   }
 
   .apple-tile {
-    min-height: clamp(340px, 72svh, 500px);
+    min-height: var(--mobile-scene-height);
     margin: 0;
     border-radius: 0;
     padding: clamp(1.45rem, 6vw, 2.15rem) 18px;
@@ -863,8 +866,8 @@ body::after {
 
   .apple-section,
   .apple-contact {
-    min-height: auto;
-    padding: clamp(2.6rem, 10svh, 4rem) 18px;
+    min-height: var(--mobile-scene-height);
+    padding: clamp(2.2rem, 8svh, 3.2rem) 18px;
   }
 
   .apple-section__inner > p:not(.apple-eyebrow),
