@@ -15,8 +15,8 @@ const getInitialTheme = (): Theme => {
   } catch {
     // localStorage no disponible
   }
-  // MD3: default to light theme (tokens defined as light-first)
-  return 'light';
+  // Premium vCard: default to dark luxury theme.
+  return 'dark';
 };
 
 const applyTheme = (theme: Theme) => {
@@ -30,7 +30,7 @@ const applyTheme = (theme: Theme) => {
   const metaTag = document.createElement('meta');
   metaTag.name = 'theme-color';
   // MD3 surface colors for browser chrome
-  metaTag.content = theme === 'dark' ? '#15202B' : '#FFFFFF';
+  metaTag.content = theme === 'dark' ? '#080B10' : '#F5EFE5';
   document.head.appendChild(metaTag);
 };
 

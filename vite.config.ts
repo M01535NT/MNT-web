@@ -10,10 +10,10 @@ export default defineConfig({
       manifest: {
         name: 'MNT — Moisés Núñez',
         short_name: 'MNT',
-        description: 'Consultor inmobiliario en Tijuana, BC.',
+        description: 'Abogado y asesor inmobiliario con estrategia, confianza y visión patrimonial.',
         lang: 'es-MX',
-        theme_color: '#FFFFFF',
-        background_color: '#FFFFFF',
+        theme_color: '#080B10',
+        background_color: '#080B10',
         display: 'standalone',
         start_url: '/',
         icons: [
