@@ -256,10 +256,39 @@ const handleScroll = () => {
   header.classList.toggle('scrolled', window.scrollY > 4);
 };
 
+const initMotion = () => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) {
+    document.querySelectorAll('.animate-in').forEach(el => el.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+
+  const device = document.querySelector('.apple-device') as HTMLElement | null;
+  window.addEventListener('pointermove', (event) => {
+    if (!device || window.innerWidth < 760) return;
+    const x = (event.clientX / window.innerWidth - 0.5) * 2;
+    const y = (event.clientY / window.innerHeight - 0.5) * 2;
+    device.style.setProperty('--tilt-x', `${(-y * 4).toFixed(2)}deg`);
+    device.style.setProperty('--tilt-y', `${(x * 5).toFixed(2)}deg`);
+  }, { passive: true });
+};
+
 const init = () => {
   initTheme();
   watchSystemTheme();
   renderApp();
+  initMotion();
 
   document.addEventListener('click', (e) => {
     handleThemeToggle(e);
