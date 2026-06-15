@@ -38,6 +38,12 @@ export const icons = {
     <path d="m3.5 6.5 8.5 6 8.5-6" />
   `),
 
+  web: wrap(`
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18" />
+    <path d="M12 3c2.4 2.5 3.6 5.5 3.6 9S14.4 18.5 12 21c-2.4-2.5-3.6-5.5-3.6-9S9.6 5.5 12 3Z" />
+  `),
+
   location: wrap(`
     <path d="M12 22s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z" />
     <circle cx="12" cy="10" r="2.5" />
@@ -107,6 +113,11 @@ export const icons = {
 
   facebook: wrap(`
     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3V2Z" />
+  `),
+
+  messenger: wrap(`
+    <path d="M21 11.5a8.5 8.5 0 1 1-3.1-6.6A8.4 8.4 0 0 1 21 11.5Z" />
+    <path d="m7.5 13.2 3-3.2 2.8 2.2 3.2-3.4" />
   `),
 
   linkedin: wrap(`

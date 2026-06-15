@@ -29,19 +29,25 @@ const PROFILE = {
   whatsappRaw: '526640000000',
   email: 'contacto@moisesnunez.mx',
   telegram: 'moisesnunez',
+  website: 'https://moisesnunez.mx',
   social: {
     instagram: 'https://instagram.com/moisesnunez',
     facebook: 'https://facebook.com/moisesnunez',
+    messenger: 'https://m.me/moisesnunez',
     linkedin: 'https://linkedin.com/in/moisesnunez',
     tiktok: 'https://tiktok.com/@moisesnunez',
   },
 };
 
 const QUICK_ACTIONS = [
-  { label: 'WhatsApp', text: 'Respuesta directa', href: `https://wa.me/${PROFILE.whatsappRaw}?text=Hola%20Mois%C3%A9s%2C%20quiero%20agendar%20una%20asesor%C3%ADa.`, icon: 'whatsapp' as const, external: true },
-  { label: 'Llamar', text: 'Contacto inmediato', href: `tel:${PROFILE.phone}`, icon: 'phone' as const, external: false },
-  { label: 'Guardar', text: 'vCard digital', href: '#guardar', icon: 'download' as const, external: false, action: 'vcard' as const },
-  { label: 'Correo', text: 'Enviar detalles', href: `mailto:${PROFILE.email}?subject=Asesor%C3%ADa%20inmobiliaria`, icon: 'email' as const, external: false },
+  { label: 'Teléfono', href: `tel:${PROFILE.phone}`, icon: 'phone' as const, external: false },
+  { label: 'Correo', href: `mailto:${PROFILE.email}?subject=Asesor%C3%ADa%20inmobiliaria`, icon: 'email' as const, external: false },
+  { label: 'WhatsApp', href: `https://wa.me/${PROFILE.whatsappRaw}?text=Hola%20Mois%C3%A9s%2C%20quiero%20agendar%20una%20asesor%C3%ADa.`, icon: 'whatsapp' as const, external: true },
+  { label: 'Telegram', href: `https://t.me/${PROFILE.telegram}`, icon: 'telegram' as const, external: true },
+  { label: 'Instagram', href: PROFILE.social.instagram, icon: 'instagram' as const, external: true },
+  { label: 'Facebook', href: PROFILE.social.facebook, icon: 'facebook' as const, external: true },
+  { label: 'Messenger', href: PROFILE.social.messenger, icon: 'messenger' as const, external: true },
+  { label: 'Web', href: PROFILE.website, icon: 'web' as const, external: true },
 ];
 
 const SERVICES = [
@@ -103,16 +109,20 @@ const renderHero = () => `
         <a class="apple-btn apple-btn--secondary" href="#servicios">Ver servicios</a>
       </div>
     </div>
-    <div class="apple-device animate-in" style="--i: 1" aria-label="Tarjeta digital de Moisés Núñez">
-      <div class="apple-device__screen">
-        <span class="apple-device__kicker">Real Estate · Legal Backup</span>
-        <span class="apple-device__name">${PROFILE.name}</span>
-        <span class="apple-device__role">${PROFILE.location}</span>
-        <div class="apple-device__dock">
-          <span>${ic('building')} Propiedades</span>
-          <span>${ic('shield')} Respaldo legal</span>
-          <span>${ic('whatsapp')} Contacto</span>
-        </div>
+    <div class="apple-hero__marquee" aria-label="Servicios clave">
+      <div class="apple-hero__marquee-track">
+        <span>Compra con claridad</span>
+        <span>Venta con estrategia</span>
+        <span>Documentos en orden</span>
+        <span>Negociación directa</span>
+        <span>Tijuana y Baja California</span>
+        <span>Patrimonio protegido</span>
+        <span aria-hidden="true">Compra con claridad</span>
+        <span aria-hidden="true">Venta con estrategia</span>
+        <span aria-hidden="true">Documentos en orden</span>
+        <span aria-hidden="true">Negociación directa</span>
+        <span aria-hidden="true">Tijuana y Baja California</span>
+        <span aria-hidden="true">Patrimonio protegido</span>
       </div>
     </div>
   </section>
@@ -123,10 +133,9 @@ const renderQuickActions = () => `
     ${QUICK_ACTIONS.map((action, i) => {
       const attrs = action.external ? 'target="_blank" rel="noopener noreferrer"' : '';
       return `
-        <a class="apple-quick__item animate-in" style="--i: ${i}" href="${action.href}" ${attrs} data-action="${action.action ?? ''}">
+        <a class="apple-quick__item animate-in" style="--i: ${i}" href="${action.href}" ${attrs}>
           <span class="apple-quick__icon">${ic(action.icon)}</span>
           <strong>${action.label}</strong>
-          <small>${action.text}</small>
         </a>`;
     }).join('')}
   </section>
@@ -204,7 +213,7 @@ const renderFooter = () => `
 `;
 
 const prepareTextMotion = () => {
-  const titles = document.querySelectorAll<HTMLHeadingElement>('main h1, main h2');
+  const titles = document.querySelectorAll<HTMLHeadingElement>('main h2');
 
   titles.forEach(title => {
     const text = title.textContent?.trim();
